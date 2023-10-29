@@ -39,7 +39,8 @@ jobs:
           docker push mishafomenko/onlinestore2:backend-1.0
       - name: creating the .pem key file
         run: |
-          sudo echo ${{secrets.ONLINESTORE2_SKEY_PEM}} > onlinestore2-skey.pem &&
+          sudo touch onlinestore2-skey.pem
+          sudo echo ${{secrets.ONLINESTORE2_SKEY_PEM}} > onlinestore2-skey.pem
           sudo chmod 400 onlinestore2-skey.pem
       - name: accessing the AWS EC2 server
         run: yes | sudo ssh -i "onlinestore2-skey.pem" ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
