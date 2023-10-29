@@ -23,13 +23,10 @@ jobs:
           cd backend &&
           sudo npm install &&
           cd ..
-      # - uses: crazy-max/ghaction-setup-docker@v2
       - name: installing homebrew
         run: yes "" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      - name: installing and starting docker
-        run: |
-          brew install --cask docker &&
-          sudo open --background -a docker
+      - name: installing docker
+        run: brew install --cask docker
       - name: building the images
         run: | 
           sudo docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
