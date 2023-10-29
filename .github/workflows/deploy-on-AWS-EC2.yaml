@@ -1,0 +1,50 @@
+run-name: ${{github.actor}} is deploying to AWS EC2 server
+on: [push]
+jobs: 
+  building-and-running-the-images:
+    runs-on: macos-latest
+    env:
+      STRIPE_SECRET_KEY: sk_test_51Nhf4NLtxhLqEU8XAH1NjCBpgMaMR0XaWFXxrlH4RvN4sBo7JxUErRAGYRwbR3ASobcmENC0ngeC5zt5xBKZpTHB00L8IzUh71
+      ALGOLIA_ID: SY063LBNVY
+      ALGOLIA_ADMIN_KEY: b9257495a6a6d0d4e273aafd56b1dcd2
+      ALGOLIA_SEARCH_KEY: 25ccff8890d08db8a50400e79007f59f
+      FIREBASE_API_KEY: AIzaSyCoGURJeUWdIylWkAEDYEpOqY6YnAaJYy0
+      PUBLIC_IP: http://3.138.124.228
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with: 
+          node-version: '14'
+      - name: install the dependencies
+        run: |
+          cd frontend &&
+          sudo npm install &&
+          cd .. &&
+          cd backend &&
+          sudo npm install &&
+          cd ..
+      - uses: crazy-max/ghaction-setup-docker@v2
+      - name: building the images
+        run: | 
+          sudo docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
+          sudo docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
+      - name: pushing the images to dockerhub
+        run: | 
+          sudo docker push mishafomenko/onlinestore2:frontend-1.0 &&
+          sudo docker push mishafomenko/onlinestore2:backend-1.0
+      - name: creating the .pem key file
+        run: |
+          sudo echo ${{secrets.ONLINESTORE2_SKEY_PEM}} > onlinestore2-skey.pem &&
+          sudo chmod 400 onlinestore2-skey.pem
+      - name: accessing the AWS EC2 server
+        run: yes | sudo ssh -i "onlinestore2-skey.pem" ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
+      - name: stopping and deleting the previous containers and starting the new ones
+        run: |
+          sudo docker stop $(docker ps -a -q) &&
+          sudo docker rm $(docker ps -a -q) &&
+          sudo docker rmi $(docker images -a -q) &&
+          sudo docker pull mishafomenko/onlinestore2:backend-1.0 &&
+          sudo docker pull mishafomenko/onlinestore2:frontend-1.0 &&
+          sudo docker run -d -p 3001:3001 mishafomenko/onlinestore2:backend-1.0 &&
+          sudo docker run -d -p 80:3000 mishafomenko/onlinestore2:frontend-1.0 &&
+
