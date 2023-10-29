@@ -47,9 +47,9 @@ jobs:
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
       - name: stopping and deleting the previous containers and starting the new ones
         run: |
-          sudo docker stop $$(docker ps -a -q) 
-          sudo docker rm $$(docker ps -a -q) 
-          sudo docker rmi $$(docker images -a -q) 
+          sudo docker stop $$\(docker ps -a -q\) 
+          sudo docker rm $$\(docker ps -a -q\) 
+          sudo docker rmi $$\(docker images -a -q\) 
           sudo docker pull mishafomenko/onlinestore2:backend-1.0 
           sudo docker pull mishafomenko/onlinestore2:frontend-1.0 
           sudo docker run -d -p 3001:3001 mishafomenko/onlinestore2:backend-1.0 
