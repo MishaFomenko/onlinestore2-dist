@@ -43,7 +43,7 @@ jobs:
           docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
 
       - name: Log in to Docker Hub
-        run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_PASSWORD }} -h https://index.docker.io/v1/
+        run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} -h https://index.docker.io/v1/
 
       - name: Push Docker images to Docker Hub
         run: |
