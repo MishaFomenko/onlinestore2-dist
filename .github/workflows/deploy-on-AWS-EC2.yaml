@@ -32,6 +32,7 @@ jobs:
           open /Applications/Docker.app
       - name: building the images
         run: | 
+          docker buildx create --use &&
           docker buildx build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
           docker buildx build -t mishafomenko/onlinestore2:backend-1.0 ./backend
       - name: pushing the images to dockerhub
