@@ -2,7 +2,7 @@ run-name: ${{github.actor}} is deploying to AWS EC2 server
 on: [push]
 jobs: 
   building-and-running-the-images:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       STRIPE_SECRET_KEY: sk_test_51Nhf4NLtxhLqEU8XAH1NjCBpgMaMR0XaWFXxrlH4RvN4sBo7JxUErRAGYRwbR3ASobcmENC0ngeC5zt5xBKZpTHB00L8IzUh71
       ALGOLIA_ID: SY063LBNVY
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with: 
           node-version: '20'
-      - name: install the dependencies
+      - name: install dependencies
         run: |
           cd frontend &&
           sudo npm install &&
@@ -23,13 +23,10 @@ jobs:
           cd backend &&
           sudo npm install &&
           cd ..
-      - name: installing homebrew
-        run: yes "" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - name: installing and running docker
         run: |
-          brew install --cask docker &&
-          brew install docker-buildx &&
-          open /Applications/Docker.app
+          sudo yum install docker &&
+          sudo service docker start
       - name: building the images
         run: | 
           docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
