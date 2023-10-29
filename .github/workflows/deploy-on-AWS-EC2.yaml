@@ -38,9 +38,9 @@ jobs:
       #     sudo docker push mishafomenko/onlinestore2:frontend-1.0 &&
       #     sudo docker push mishafomenko/onlinestore2:backend-1.0
       - name: Build the Docker images
-      run: |
-        docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend
-        docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
+        run: |
+          docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend
+          docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
 
       - name: Log in to Docker Hub
         run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_PASSWORD }} -h https://index.docker.io/v1/
