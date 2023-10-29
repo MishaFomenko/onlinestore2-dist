@@ -28,7 +28,7 @@ jobs:
         run: yes "" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - name: installing and starting docker
         run: |
-          sudo brew install --cask docker &&
+          brew install --cask docker &&
           sudo open --background -a Docker
       - name: building the images
         run: | 
