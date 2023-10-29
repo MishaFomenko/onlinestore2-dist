@@ -27,16 +27,28 @@ jobs:
         run: |
           sudo npm install docker &&
           sudo service docker start
-      - name: building the images
-        run: | 
-          sudo docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
-          sudo docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
-      - name: loging in dockerhub account
-        run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: pushing the images to dockerhub
-        run: | 
-          sudo docker push mishafomenko/onlinestore2:frontend-1.0 &&
-          sudo docker push mishafomenko/onlinestore2:backend-1.0
+      # - name: building the images
+      #   run: | 
+      #     sudo docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
+      #     sudo docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
+      # - name: loging in dockerhub account
+      #   run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_PASSWORD }}
+      # - name: pushing the images to dockerhub
+      #   run: | 
+      #     sudo docker push mishafomenko/onlinestore2:frontend-1.0 &&
+      #     sudo docker push mishafomenko/onlinestore2:backend-1.0
+      - name: Build the Docker images
+      run: |
+        docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend
+        docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
+
+      - name: Log in to Docker Hub
+        run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_PASSWORD }} -h https://index.docker.io/v1/
+
+      - name: Push Docker images to Docker Hub
+        run: |
+          docker push mishafomenko/onlinestore2:frontend-1.0
+          docker push mishafomenko/onlinestore2:backend-1.0
       - name: creating the .pem key file
         run: |
           sudo echo ${{secrets.ONLINESTORE2_SKEY_PEM}} > onlinestore2-skey.pem &&
