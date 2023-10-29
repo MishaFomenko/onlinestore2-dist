@@ -28,7 +28,7 @@ jobs:
       - name: installing and running docker
         run: |
           brew install --cask docker &&
-          sudo open /Applications/Docker.app
+          sudo docker desktop start
       - name: building the images
         run: | 
           docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
