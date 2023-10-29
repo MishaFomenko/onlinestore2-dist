@@ -46,9 +46,9 @@ jobs:
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
       - name: stopping and deleting the previous containers and starting the new ones
         run: |
-          sudo docker stop "$(docker ps -a -q)"
-          sudo docker rm "$(docker ps -a -q)"
-          sudo docker rmi "$(docker images -q)"
+          sudo docker stop ${{ '$(docker ps -a -q)' }}
+          sudo docker rm ${{ '$(docker ps -a -q)' }}
+          sudo docker rmi ${{ '$(docker images -q)' }}
           y | sudo docker system prune -a
       - name: pulling the new images from dockerhub
         run: |
