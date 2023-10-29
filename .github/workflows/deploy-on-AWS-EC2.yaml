@@ -25,7 +25,7 @@ jobs:
           cd ..
       - name: installing and running docker
         run: |
-          sudo yum install docker &&
+          sudo npm install docker &&
           sudo service docker start
       - name: building the images
         run: | 
