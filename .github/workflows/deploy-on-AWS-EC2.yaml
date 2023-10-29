@@ -29,7 +29,7 @@ jobs:
       - name: installing and starting docker
         run: |
           brew install --cask docker &&
-          sudo open --background -a Docker
+          sudo open --background -a docker
       - name: building the images
         run: | 
           sudo docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
