@@ -28,11 +28,12 @@ jobs:
       - name: installing and running docker
         run: |
           brew install --cask docker &&
+          brew install docker-buildx &&
           open /Applications/Docker.app
       - name: building the images
         run: | 
-          docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
-          docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
+          docker buildx build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
+          docker buildx build -t mishafomenko/onlinestore2:backend-1.0 ./backend
       - name: pushing the images to dockerhub
         run: | 
           docker push mishafomenko/onlinestore2:frontend-1.0 &&
