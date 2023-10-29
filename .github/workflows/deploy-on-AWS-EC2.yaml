@@ -23,7 +23,9 @@ jobs:
           cd backend &&
           sudo npm install &&
           cd ..
-      - uses: crazy-max/ghaction-setup-docker@v2
+      # - uses: crazy-max/ghaction-setup-docker@v2
+      - name: installing docker
+        run: sudo npm install docker
       - name: building the images
         run: | 
           sudo docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
