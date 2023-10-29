@@ -42,14 +42,20 @@ jobs:
           sudo echo "${{secrets.ONLINESTORE2_SKEY_PEM}}" > onlinestore2-skey.pem
           sudo chmod 400 onlinestore2-skey.pem
       - name: accessing the AWS EC2 server
-        # run: yes | sudo ssh -i "onlinestore2-skey.pem" ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
         run: |
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
       - name: stopping and deleting the previous containers and starting the new ones
         run: |
-          yes | sudo docker system prune -a
+          sudo docker stop "$(docker ps -a -q)"
+          sudo docker rm "$(docker ps -a -q)"
+          sudo docker rmi "$(docker images -q)"
+          y | sudo docker system prune -a
+      - name: pulling the new images from dockerhub
+        run: |
           sudo docker pull mishafomenko/onlinestore2:backend-1.0 
           sudo docker pull mishafomenko/onlinestore2:frontend-1.0 
+      - name: running the images
+        run: |
           sudo docker run -d -p 3001:3001 mishafomenko/onlinestore2:backend-1.0 
           sudo docker run -d -p 80:3000 mishafomenko/onlinestore2:frontend-1.0 
 
