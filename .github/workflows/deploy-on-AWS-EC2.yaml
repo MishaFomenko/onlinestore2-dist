@@ -32,7 +32,7 @@ jobs:
           sudo docker build -t mishafomenko/onlinestore2:frontend-1.0 ./frontend &&
           sudo docker build -t mishafomenko/onlinestore2:backend-1.0 ./backend
       - name: loging in dockerhub account
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u mishafomenko --password-stdin
+        run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: pushing the images to dockerhub
         run: | 
           sudo docker push mishafomenko/onlinestore2:frontend-1.0 &&
