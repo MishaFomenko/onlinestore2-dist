@@ -25,7 +25,7 @@ jobs:
           cd ..
       # - uses: crazy-max/ghaction-setup-docker@v2
       - name: installing homebrew
-        run: yes "" | INTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        run: yes "" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - name: installing and starting docker
         run: |
           sudo brew install --cask docker &&
