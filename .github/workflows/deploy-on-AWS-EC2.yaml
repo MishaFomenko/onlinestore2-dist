@@ -4,12 +4,10 @@ jobs:
   building-and-running-the-images:
     runs-on: ubuntu-latest
     env:
-      STRIPE_SECRET_KEY: sk_test_51Nhf4NLtxhLqEU8XAH1NjCBpgMaMR0XaWFXxrlH4RvN4sBo7JxUErRAGYRwbR3ASobcmENC0ngeC5zt5xBKZpTHB00L8IzUh71
-      ALGOLIA_ID: SY063LBNVY
-      ALGOLIA_ADMIN_KEY: b9257495a6a6d0d4e273aafd56b1dcd2
-      ALGOLIA_SEARCH_KEY: 25ccff8890d08db8a50400e79007f59f
-      FIREBASE_API_KEY: AIzaSyCoGURJeUWdIylWkAEDYEpOqY6YnAaJYy0
-      PUBLIC_IP: http://3.138.124.228
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      ALGOLIA_ID: ${{ secrets.ALGOLIA_ID }}
+      ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+      ALGOLIA_SEARCH_KEY: ${{ secrets.ALGOLIA_SEARCH_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
@@ -44,7 +42,7 @@ jobs:
       - name: accessing the AWS EC2 server
         run: |
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
-      - name: stopping and deleting the previous containers and starting the new ones
+      - name: stopping the previous containers
         run: |
           ids=$(docker ps -a -q)
           for id in $ids
@@ -52,10 +50,8 @@ jobs:
           echo "$id"
           docker stop $id && docker rm $id
           done
-        # run: |
-        #   sudo docker stop '$(docker ps -q)'
-        #   sudo docker rm '$(docker ps -a -q)'
-        #   sudo docker rmi '$(docker images -q)'
+      - name: deleting the previous containers
+        run: sudo docker system prune -a
       - name: pulling the new images from dockerhub
         run: |
           sudo docker pull mishafomenko/onlinestore2:backend-1.0 
