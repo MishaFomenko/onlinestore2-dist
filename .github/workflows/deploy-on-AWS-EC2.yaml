@@ -47,6 +47,7 @@ jobs:
       - name: stopping and deleting the previous containers and starting the new ones
         run: |
           sudo docker stop \$(docker ps -q)
+        shell: bash
           sudo docker rm ${{ '$(docker ps -a -q)' }}
           sudo docker rmi ${{ '$(docker images -q)' }}
           y | sudo docker system prune -a
