@@ -17,6 +17,10 @@ export default function Shop() {
         !isLoading && setBs(data);
     }, [data, isLoading]);
 
+    console.log('url to the server from homepage: ', bestsRequestPath)
+
+    console.log('the error: ', error)
+
     return (
         <>
             {!isLoading && !data && error
