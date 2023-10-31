@@ -53,7 +53,7 @@ jobs:
           docker stop $id && docker rm $id
           done
       - name: deleting the previous containers
-        run: sudo docker system prune -a
+        run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
         run: |
           sudo docker pull mishafomenko/onlinestore2:backend-1.0 
