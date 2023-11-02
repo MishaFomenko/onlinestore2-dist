@@ -57,7 +57,7 @@ jobs:
             docker rm $id
           done
           echo "the loop is done"
-        shell: bash
+        shell: sh
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
