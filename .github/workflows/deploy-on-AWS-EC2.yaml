@@ -48,7 +48,9 @@ jobs:
         run: |
           conts=$(docker ps -a -q)
           for id in $conts; do
+            echo "Stopping container: $id"
             docker stop $id
+            echo "Removing container: $id"
             docker rm $id
           done
         shell: bash
