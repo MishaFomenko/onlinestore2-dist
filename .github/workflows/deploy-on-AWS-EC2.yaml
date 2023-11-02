@@ -49,8 +49,8 @@ jobs:
           conts=$(docker ps -a -q)
           for id in $conts; do
             docker stop $id
+            docker rm $id
           done
-          docker rm $conts
         shell: bash
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
