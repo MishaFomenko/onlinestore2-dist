@@ -17,9 +17,7 @@ export default function Shop() {
         !isLoading && setBs(data);
     }, [data, isLoading]);
 
-    console.log('url to the server from homepage: ', bestsRequestPath)
-
-    console.log('the error: ', error)
+    console.log('algolia ID check: ', process.env.ALGOLIA_ID)
 
     return (
         <>
@@ -34,7 +32,7 @@ export default function Shop() {
                     </div>
                     :
                     <>
-                        <div className='h-16 bg-blue-400 flex items-center p-6'>Beeeeeeeest Sellers</div>
+                        <div className='h-16 bg-blue-400 flex items-center p-6'>Best Sellers</div>
                         <div className='flex flex-wrap'>
                             {!isLoading && bs.map((item) => <ProductCard key={item.asin} item={item} />)}
                         </div>

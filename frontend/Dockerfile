@@ -6,6 +6,11 @@
 
 ARG NODE_VERSION=20.5.1
 
+ARG STRIPE_SECRET_KEY_A
+ARG ALGOLIA_ID_A
+ARG ALGOLIA_ADMIN_KEY_A
+ARG ALGOLIA_SEARCH_KEY_A
+
 ################################################################################
 # Use node image for base image for all stages.
 FROM node:${NODE_VERSION}-alpine as base
@@ -62,10 +67,10 @@ COPY package.json .
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/. ./.
 
-ENV STRIPE_SECRET_KEY=process.env.STRIPE_SECRET_KEY
-ENV ALGOLIA_ID=process.env.ALGOLIA_ID
-ENV ALGOLIA_ADMIN_KEY=process.env.ALGOLIA_ADMIN_KEY
-ENV ALGOLIA_SEARCH_KEY=process.env.ALGOLIA_SEARCH_KEY
+ENV STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY_A
+ENV ALGOLIA_ID=$ALGOLIA_ID_A
+ENV ALGOLIA_ADMIN_KEY=$ALGOLIA_ADMIN_KEY_A
+ENV ALGOLIA_SEARCH_KEY=$ALGOLIA_SEARCH_KEY_A
 
 # Expose the port that the application listens on.
 EXPOSE 3000

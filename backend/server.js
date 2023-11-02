@@ -228,4 +228,5 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
 app.listen(port, () => {
     console.log(`API server is running on port ${port}`);
+    console.log('server algolia ID check: ', process.env.ALGOLIA_ID)
 });
