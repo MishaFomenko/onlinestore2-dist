@@ -45,7 +45,7 @@ jobs:
         run: |
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
       - name: logging the found containers
-        run: echo "$(docker ps -a -q)"
+        run: echo "${{ '${docker ps -a -q}' }}"
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
