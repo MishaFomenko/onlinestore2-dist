@@ -45,7 +45,7 @@ jobs:
         run: |
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
       - name: gathering the running containers
-        run: ids=$(docker ps -a -q)
+        run: ids={{ $(docker ps -a -q) }}
       - name: logging the found containers
         run: echo "$ids"
       - name: deleting the previous containers
