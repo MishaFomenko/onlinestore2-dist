@@ -42,13 +42,13 @@ jobs:
           sudo echo "${{secrets.ONLINESTORE2_SKEY_PEM}}" > onlinestore2-skey.pem
           sudo chmod 400 onlinestore2-skey.pem
       - name: accessing the AWS EC2 server
-        # run: |
-        #   ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
         run: |
-          ssh -i "onlinestore2-skey.pem" ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
-      - name: stopping the previous containers
-        run: |
+          ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
           docker ps
+
+      # - name: stopping the previous containers
+      #   run: |
+      #     docker ps
         
       # - name: deleting the previous containers
       #   run: yes | sudo docker system prune -a
