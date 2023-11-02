@@ -29,20 +29,8 @@ jobs:
           sudo service docker start
       - name: Build the Docker images
         run: |
-          docker build \
-          --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" \
-          --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" \
-          --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" \
-          --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}"
-          -t mishafomenko/onlinestore2:frontend-1.0 ./frontend
-          docker build \
-          --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" \
-          --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" \
-          --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" \
-          --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}" \
-          --build-arg FIREBASE_API_KEY_A="{{ secrets.FIREBASE_API_KEY }}" \
-          --build-arg PUBLIC_IP_A="{{ secrets.PUBLIC_IP }}" \
-          -t mishafomenko/onlinestore2:backend-1.0 ./backend
+          docker build --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}" -t mishafomenko/onlinestore2:frontend-1.0 ./frontend
+          docker build --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}" --build-arg FIREBASE_API_KEY_A="{{ secrets.FIREBASE_API_KEY }}" --build-arg PUBLIC_IP_A="{{ secrets.PUBLIC_IP }}" -t mishafomenko/onlinestore2:backend-1.0 ./backend
       - name: Log in to Docker Hub
         run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
       - name: Push Docker images to Docker Hub
