@@ -49,6 +49,7 @@ jobs:
           echo "I am in the stopping step"
           conts=$(docker ps -a -q)
           echo "setup the variable"
+          echo "the variable is: $conts"
           for id in $conts; do
             echo "Stopping container: $id"
             docker stop $id
