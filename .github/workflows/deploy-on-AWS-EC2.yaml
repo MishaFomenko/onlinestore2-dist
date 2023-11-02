@@ -43,7 +43,8 @@ jobs:
           sudo chmod 400 onlinestore2-skey.pem
       - name: accessing the AWS EC2 server
         run: |
-          ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com; docker ps
+          ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com docker rm $(docker stop $(docker ps -a -q --filter ancestor=mishafomenko/onlinestore2:backend-1.0 --format="{{.ID}}"))
+
 
 
       # - name: stopping the previous containers
