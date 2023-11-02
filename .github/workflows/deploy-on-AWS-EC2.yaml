@@ -15,28 +15,28 @@ jobs:
       - uses: actions/setup-node@v3
         with: 
           node-version: '20'
-      - name: install dependencies
-        run: |
-          cd frontend &&
-          sudo npm install &&
-          cd .. &&
-          cd backend &&
-          sudo npm install &&
-          cd ..
-      - name: installing and running docker
-        run: |
-          sudo npm install docker &&
-          sudo service docker start
-      - name: Build the Docker images
-        run: |
-          docker build --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}" -t mishafomenko/onlinestore2:frontend-1.0 ./frontend
-          docker build --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}" --build-arg FIREBASE_API_KEY_A="{{ secrets.FIREBASE_API_KEY }}" --build-arg PUBLIC_IP_A="{{ secrets.PUBLIC_IP }}" -t mishafomenko/onlinestore2:backend-1.0 ./backend
-      - name: Log in to Docker Hub
-        run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-      - name: Push Docker images to Docker Hub
-        run: |
-          docker push mishafomenko/onlinestore2:frontend-1.0
-          docker push mishafomenko/onlinestore2:backend-1.0
+      # - name: install dependencies
+      #   run: |
+      #     cd frontend &&
+      #     sudo npm install &&
+      #     cd .. &&
+      #     cd backend &&
+      #     sudo npm install &&
+      #     cd ..
+      # - name: installing and running docker
+      #   run: |
+      #     sudo npm install docker &&
+      #     sudo service docker start
+      # - name: Build the Docker images
+      #   run: |
+      #     docker build --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}" -t mishafomenko/onlinestore2:frontend-1.0 ./frontend
+      #     docker build --build-arg STRIPE_SECRET_KEY_A="${{ secrets.STRIPE_SECRET_KEY }}" --build-arg ALGOLIA_ID_A="{{ secrets.ALGOLIA_ID }}" --build-arg ALGOLIA_ADMIN_KEY_A="{{ secrets.ALGOLIA_ADMIN_KEY }}" --build-arg ALGOLIA_SEARCH_KEY_A="{{ secrets.ALGOLIA_SEARCH_KEY }}" --build-arg FIREBASE_API_KEY_A="{{ secrets.FIREBASE_API_KEY }}" --build-arg PUBLIC_IP_A="{{ secrets.PUBLIC_IP }}" -t mishafomenko/onlinestore2:backend-1.0 ./backend
+      # - name: Log in to Docker Hub
+      #   run: docker login -u mishafomenko -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+      # - name: Push Docker images to Docker Hub
+      #   run: |
+      #     docker push mishafomenko/onlinestore2:frontend-1.0
+      #     docker push mishafomenko/onlinestore2:backend-1.0
       - name: creating the .pem key file
         run: |
           sudo echo "${{secrets.ONLINESTORE2_SKEY_PEM}}" > onlinestore2-skey.pem
@@ -44,15 +44,10 @@ jobs:
       - name: accessing the AWS EC2 server
         run: |
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
-      - name: stopping the previous containers
-        shell: bash
-        run: |
-          sudo ids=$(docker ps -a -q)
-          sudo for id in $ids; do
-            sudo echo "$id"
-            sudo docker stop $id
-            sudo docker rm $id
-          sudo done
+      - name: gathering the running containers
+        run: ids=$(docker ps -a -q)
+      - name: logging the found containers
+        run: echo "$ids"
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
