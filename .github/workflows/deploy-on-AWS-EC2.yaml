@@ -43,7 +43,7 @@ jobs:
           sudo chmod 400 onlinestore2-skey.pem
       - name: accessing the AWS EC2 server
         run: |
-          ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com ids=$(sudo docker ps -a -q)
+          ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com; ids=$(docker ps -a -q)
       - name: logging the var
         run: |
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com echo "the var is: $ids"
