@@ -49,6 +49,7 @@ jobs:
           conts=$(docker ps -a -q)
           docker stop $conts
           docker rm $(docker ps -a -q)
+        shell: bash
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
