@@ -47,12 +47,12 @@ jobs:
       - name: stopping the previous containers
         shell: bash
         run: |
-          ids=$(docker ps -a -q)
-          for id in $ids; do
-            echo "$id"
-            docker stop $id
-            docker rm $id
-          done
+          sudo ids=$(docker ps -a -q)
+          sudo for id in $ids; do
+            sudo echo "$id"
+            sudo docker stop $id
+            sudo docker rm $id
+          sudo done
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
