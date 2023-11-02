@@ -46,12 +46,8 @@ jobs:
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
       - name: stopping the previous containers
         run: |
-          ids=$(docker ps -a -q)
-          for id in $ids
-          do
-          echo "$id"
-          docker stop $id && docker rm $id
-          done
+          ids=$(docker ps -a -q) 
+          for id in $ids do echo "$id" docker stop $id && docker rm $id done
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
