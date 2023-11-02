@@ -44,12 +44,9 @@ jobs:
       - name: accessing the AWS EC2 server
         run: |
           ssh -i "onlinestore2-skey.pem" -o StrictHostKeyChecking=no ec2-user@ec2-3-138-124-228.us-east-2.compute.amazonaws.com
-      - name: logging the found containers
-        run: bbb=""
-      - name: two
-        run: bbb=${{ '$(docker ps -aq)' }}
-      - name: three
-        run: echo "$bbb"
+      - name: stopping the previous containers
+        docker stop $(docker ps -a -q)
+        docker rm $(docker ps -a -q)
       - name: deleting the previous containers
         run: yes | sudo docker system prune -a
       - name: pulling the new images from dockerhub
