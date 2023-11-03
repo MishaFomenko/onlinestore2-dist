@@ -17,8 +17,6 @@ export default function Shop() {
         !isLoading && setBs(data);
     }, [data, isLoading]);
 
-    console.log('algolia ID check: ', process.env.ALGOLIA_ID)
-
     return (
         <>
             {!isLoading && !data && error
