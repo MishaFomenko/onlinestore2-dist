@@ -59,3 +59,10 @@ For the storage of our products and user’s data there were a few choices inclu
 ## Previous versions
 
 A previous single-page-app version of this app (no longer maintained) can be found [here](https://github.com/MishaFomenko/online-store-2.0)
+
+## CI workflow
+
+CI workflow is implemented using the AWS EC2 server where the app is deployed using ghactions and docker images. 
+For an example of a CI workflow see the video [here](https://github.com/MishaFomenko/onlinestore2-dist/assets/85066667/6aac4808-33f7-419c-8fee-9a84182eaf94)
+
+
