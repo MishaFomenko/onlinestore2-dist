@@ -30,7 +30,7 @@ export default function Shop() {
                     </div>
                     :
                     <>
-                        <div className='h-16 bg-blue-400 flex items-center p-6'>Best Sellers</div>
+                        <div className='h-16 bg-blue-400 flex items-center p-6'>Recommended products</div>
                         <div className='flex flex-wrap'>
                             {!isLoading && bs.map((item) => <ProductCard key={item.asin} item={item} />)}
                         </div>
