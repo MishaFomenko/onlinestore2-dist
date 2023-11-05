@@ -65,4 +65,4 @@ A previous single-page-app version of this app (no longer maintained) can be fou
 CI workflow is implemented using the AWS EC2 server where the app is deployed using ghactions and docker images. 
 For an example of a CI workflow see the video [here](https://github.com/MishaFomenko/onlinestore2-dist/assets/85066667/6aac4808-33f7-419c-8fee-9a84182eaf94)
 
-
+[CI workflow gif](https://github.com/MishaFomenko/onlinestore2-dist/assets/85066667/c9d43d61-42ba-4a1e-a3f4-b973a78b8265)
